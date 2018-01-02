@@ -6,8 +6,6 @@ import Helpers exposing (..)
 import Model exposing (..)
 import Msg exposing (..)
 import Dropdown exposing (Dropdown, Event(ItemSelected))
-import Html.Events exposing (onInput, onClick)
-import Html.Attributes exposing (placeholder, disabled)
 import Http
 import Json.Decode as Decode
 import Json.Encode
@@ -34,7 +32,7 @@ view model =
         , empty
         , empty
         , content [ p [] [ textHtml model.chapterContent ] ]
-        ]g
+        ]
 
 main : Program Never Model Msg
 main =

@@ -9,6 +9,8 @@ import Json.Decode as Decode
 import Model exposing (..)
 import Dropdown exposing (Dropdown)
 import Html.Events as Events
+import Html.Events exposing (onInput, onClick)
+import Html.Attributes exposing (placeholder, disabled)
 
 contained : List (Html Msg) -> Html Msg
 contained = div [ Attributes.class "container" ]
