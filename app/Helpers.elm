@@ -78,3 +78,15 @@ shouldDisableButton model =
         isNothing  model.selectedItem
                 || model.bookId    == ""
                 || model.chapterId == ""
+
+chapterSelection : Model -> Html Msg
+chapterSelection model =
+    div
+        []
+        [ inputField "Book ID" UpdateBookId
+        , inputField "Chapter ID" UpdateChapterId
+        , button 
+            [ onClick RetrieveChapter, disabled <| shouldDisableButton model  ]
+            [ text "Submit" ]
+        , makeDropdown model
+        ]

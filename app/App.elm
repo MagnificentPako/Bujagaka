@@ -26,36 +26,6 @@ init =
         ""
     , Cmd.none )
 
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
-    case msg of
-        ProviderSelected dropdownMsg ->
-            let
-                ( updatedDropdown, event ) =
-                    Dropdown.update dropdownMsg model.dropdown
-            in
-                case event of
-                    ItemSelected provider ->
-                        ({ model
-                            | dropdown = updatedDropdown
-                            , selectedItem = Just provider
-                        }, Cmd.none)
-                    _ ->
-                        ({ model | dropdown = updatedDropdown }, Cmd.none)
-        UpdateBookId bid ->
-            ({ model | bookId = bid }, Cmd.none)
-        UpdateChapterId cid ->
-            ({ model | chapterId = cid}, Cmd.none)
-        RetrieveChapter ->
-            case model.selectedItem of
-                Nothing -> (model, Cmd.none)
-                Just provider ->
-                    (model, getChapter provider.type_ model.bookId model.chapterId)
-        ReceiveChapter (Ok newContent) ->
-            ({model | chapterContent = newContent}, Cmd.none)
-        ReceiveChapter (Err _) ->
-            (model, Cmd.none)
-
 view : Model -> Html Msg
 view model =
     contained
@@ -64,8 +34,6 @@ view model =
         , empty
         , empty
         , content [ p [] [ textHtml model.chapterContent ] ]
-            --(Lorem.paragraphs 12
-            --    |> Lorem.wrapInHtml (p []))
         ]
 
 main : Program Never Model Msg
@@ -76,29 +44,3 @@ main =
         , update = update
         , subscriptions = always Sub.none
         }
-
-chapterSelection : Model -> Html Msg
-chapterSelection model =
-    div
-        []
-        [ inputField "Book ID" UpdateBookId
-        , inputField "Chapter ID" UpdateChapterId
-        , button 
-            [ onClick RetrieveChapter, disabled <| shouldDisableButton model  ]
-            [ text "Submit" ]
-        , makeDropdown model
-        ]
-
-getChapter : ProviderType -> String -> String -> Cmd Msg
-getChapter pt bid cid =
-    let
-        providerName = case pt of
-            RoyalRoadL -> "rrl"
-            WebNovel -> "ffn"
-            FanFiction -> "webnovel"
-        url =
-            "http://localhost:5000/" ++ providerName ++ "/" ++ bid ++ "/chapter/" ++ cid
-        request =
-            Http.get url decodeChapter
-    in
-        Http.send ReceiveChapter request
