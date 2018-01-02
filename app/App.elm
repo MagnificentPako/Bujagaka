@@ -34,7 +34,7 @@ view model =
         , empty
         , empty
         , content [ p [] [ textHtml model.chapterContent ] ]
-        ]
+        ]g
 
 main : Program Never Model Msg
 main =

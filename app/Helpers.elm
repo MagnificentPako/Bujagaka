@@ -44,11 +44,7 @@ textHtml t =
             |> Attributes.property "innerHTML"
         ]
         []
-
-decodeChapter : Decode.Decoder String
-decodeChapter = 
-    Decode.at ["content"] Decode.string
-
+        
 makeDropdown : Model -> Html Msg
 makeDropdown model = 
     div

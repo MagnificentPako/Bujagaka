@@ -4,7 +4,7 @@ import Model exposing (..)
 import Dropdown exposing (Dropdown)
 import Dropdown exposing (Event(ItemSelected))
 import Http exposing (..)
-import Helpers exposing (decodeChapter)
+import Decode exposing (..)
 
 type Msg = ProviderSelected (Dropdown.Msg Provider)
          | UpdateBookId String
