@@ -47,8 +47,8 @@ getChapter pt bid cid =
     let
         providerName = case pt of
             RoyalRoadL -> "rrl"
-            WebNovel -> "ffn"
-            FanFiction -> "webnovel"
+            WebNovel -> "webnovel"
+            FanFiction -> "ffn"
         url =
             "http://localhost:5000/" ++ providerName ++ "/" ++ bid ++ "/chapter/" ++ cid
         request =
